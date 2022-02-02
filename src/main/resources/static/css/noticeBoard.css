@@ -1,0 +1,191 @@
+#header{
+  background:#999999;
+  text-align:center;
+  margin:0px 30px;
+}
+
+a:hover{
+  color:#000000;
+  text-decoration: underline;
+
+}
+a{
+  color:#000000;
+  text-decoration:none;
+}
+
+a:hover{
+  color:#000000;
+  text-decoration: underline;
+
+}
+
+.logo{
+  float:left;
+}
+h1{
+  padding-top:10px;
+}
+.clear{
+  clear:both;
+}
+
+#content{
+
+}
+
+.bbsList{
+  width:100%;
+  border-spacing:0;
+}
+
+.bbsList thead tr th{
+  background:#eeeeee;
+  border-top:4px solid #666666;
+  border-bottom:2px solid #bbbbbb;
+  padding:10px;
+}
+
+.bbsList tbody tr td{
+  font-size:12px;
+  padding:5px;
+  border-bottom:1px solid #bbbbbb;
+}
+
+.bbsList td{
+  text-align:center;
+}
+
+.bbsList .t_subject{
+  width:45%;
+  text-align:left;
+}
+
+.bbsList .t_subject .t_comment{
+  font-size:12px;
+  color:#ff2222;
+  margin-left:3px;
+}
+
+.imagesource{
+  width:12px;
+  height:12px;
+}
+
+.bbsList .t_hasImage{
+  width:12px;
+  height:12px;
+  background:url("http://www.psdgraphics.com/file/four-leaf-clover.jpg") no-repeat;
+  background-size:12px;
+  display:inline-block;
+  background-position:center;
+}
+
+/* .bbsList .t_author{ */
+/*   text-align:left; */
+/*   padding:20px; */
+/*   background:url("http://www.psdgraphics.com/file/four-leaf-clover.jpg") no-repeat; */
+/*   background-size:12px; */
+/*   background-position:3px; */
+/* } */
+
+.bbsList .t_author{
+  text-align: left;
+}
+
+.bbsList .t_author a{
+  left:10px;
+  position: relative;
+}
+
+.bbsList .t_author span{
+  position: absolute;
+}
+.bbsList .t_Icon{
+  width:12px;
+  height:12px;
+  display:inline-block;
+
+}
+.imageIcon{
+  width:12px;
+  height:12px;
+  position:center;
+}
+
+.bbsList .t_notice{
+  background: #aaaaaa;
+}
+
+.bbsList .t_notice .t_subject a{
+  color: #992222;
+  font-weight:bold;
+  text-decoration:underline;
+}
+
+.bbsList .t_notice .t_number span{
+  background: #444444;
+  font-size:11px;
+  font-weight: bold;
+  padding:2px;
+}
+
+.bbsList tfoot{
+  text-align:right;
+}
+.bbsList tfoot tr td{
+  border-top:3px solid #444444;
+  border-bottom: 2px solid #bbbbbb;
+  text-align:right;
+  padding:10px;
+  background:#999999;
+}
+.bbsList tfoot .btnWrite:hover{
+  background:#226666;
+  text-decoration:none;
+}
+
+
+.bbsList tfoot .btnWrite{
+  border:1px solid #333333;
+  font-size: 11px;
+  padding:6px;
+  background: #ffffff;
+}
+
+.bbsList tfoot .btnWrite span{
+  position:relative;
+  top:2px;
+}
+
+.pageContainer{
+  width:100%;
+  text-align: center;
+
+}
+.pageList {
+  margin-top:10px;
+  display:inline-block;
+}
+
+.pageContainer .pageList li{
+  float:left;
+  padding:5px;
+  border:1px solid #bbbbbb;
+}
+
+
+
+ul,li{
+list-style:none;
+  padding: 0;
+  margin: 0;
+  }
+
+.searchContainer{
+  width:100%;
+    text-align:center;
+  margin-top:10px;
+}
+
+/*Copyright (c) 2022 by Erick Lee (https://codepen.io/passionful7/pen/rzjNWd)*/

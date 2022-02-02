@@ -1,0 +1,119 @@
+body {
+  margin : 0px ;
+}
+a{
+  text-decoration : none ;
+  color : black ;
+}
+a:hover{
+  text-decoration : underline ;
+}
+ul,lu {
+  list-style-type : none ;
+  margin : 0px ;
+  padding : 0px ;
+}
+5
+#wrap {
+  width : 860px ;
+}
+header {
+  background: #eeeeee ;
+  padding : 20px ;
+}
+header > img {
+  float : left ;
+  margin-right : 30px ;
+  width : 120px ;
+  height : 110px ;
+}
+header > h1 {
+  padding : 0px ;
+  margin : 0px ;
+}
+.clear {
+  clear : both ;
+}
+.none {
+  display : none ;
+}
+
+/*게시판*/
+/*외곽잡기*/
+#content_wrap {
+  border : 1px solid red ;
+  padding : 30px ;
+  background : honeydew ;
+  width : 100% ;
+  font-size : 13px ;
+}
+#content_wrap ul {
+  background : #ffffff ;
+  border : 1px solid #dddddd ;
+  padding : 10px ;
+}
+#content_wrap ul li{
+  margin-bottom : 6px ;
+}
+#content_wrap ul li:nth-child(2){
+  margin-bottom : 10px ;
+}
+#content_wrap .title {
+  font-weight : bold ;
+  display : inline-block ;
+  width : 60px ;
+}
+
+/*내부잡기 shift+home+insert */
+#content_wrap li:nth-child(1) div{
+  display : inline-block ;
+}
+#content_wrap li:nth-child(1) .radiobox {
+  font-size : 13px ;
+  margin-left : 50px ;
+}
+/*쓰기영역 */
+.writeWrap {
+  padding : 10px ;
+  margin : 0px ;
+}
+
+.writeWrap  .writeArea {
+  width : 95% ;
+  padding : 5% ;
+  font-size : 12px ;
+  color : #666666 ;
+
+  min-height : 300px ;
+}
+.configWrap {
+  border : none ;
+}
+.configWrap ul {
+  margin : 0px ;
+  background : #ffffff ;
+  padding : 10px ;
+}
+.configWrap .tag .InputArea input{
+  width: 500px ;
+}
+.end {
+  border-top : 1px solid #dddddd ;
+  background : white ;
+  width : 100%;
+  padding : 10px ;
+  padding-top : 30px ;
+}
+.end a {
+  font-size : 14px ;
+  border : 1px solid gold ;
+  background : khaki ;
+  padding : 3px ;
+  border-radius : 5px ;
+}
+.end a:hover {
+  font-weight : bold ;
+  text-decoration : none ;
+}
+
+/*Copyright (c) 2022 by songwoo (https://codepen.io/woosong2/pen/bGELEwL)*/

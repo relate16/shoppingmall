@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <style>
+        html, body {
+            margin: 20px;
+            padding: 0;
+        }
+        .goods {
+            float: left;
+        }
+        .order {
+            float: right;
+        }
+        .buttons {
+            clear: both;
+            margin-top: 10px;
+            padding-top: 50px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title> test </title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+<div id="cart" class="row">
+    <div id="back" class="col s6 offset-s3 z-depth-1">
+        <div class="goods left-align">
+            <div id="goods_title" th:text="|주문 제품 : ${orderDto.itemName} x ${orderDto.quantity}개|">제품 이름 x 수량 </div>
+            <div id="goods_price" th:text="|결제 가격 : ${orderDto.orderPrice}$ x ${orderDto.quantity}개 = ${orderDto.totalPrice}$|">제품 가격</div>
+            <div id="goods_img">
+                <p>이미지 : </p>
+                <img th:src="@{|/${orderDto.imgFilePath}|}" height="150" width="130">
+            </div>
+        </div>
+        <div class="order right-align">
+            <div id="order_number" th:text="|주문 번호 : #${orderDto.orderId}|">주문번호#333</div>
+            <div id="order_where" th:text="|배송지 : ${orderDto.city}|">배송지</div>
+            <div id="order_details"th:text="|주문 상태 : ${orderDto.orderStatus}|">주문상태</div>
+        </div>
+
+        <!--주문 취소를 위해 임시로 만들어둠-->
+        <form action="/orders/cancel" id="orderCancel">
+            <input type="hidden" th:value="${orderDto.orderId}" name="orderId">
+        </form>
+        <div class="buttons right-align">
+            <button class="waves-effect waves-light btn-small white black-text" onclick="location.href='/home'">홈으로</button>
+            <button class="waves-effect waves-light btn-small white black-text" onclick="location.href='/products'">쇼핑하러 가기</button>
+            <button class="waves-effect waves-light btn-small white black-text" type="submit" form="orderCancel" formmethod="post"><i class="material-icons left">close</i>주문 취소</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<!--Copyright (c) 2022 by Kim yonggwan (https://codepen.io/kimYG/pen/YzGxWqr)-->

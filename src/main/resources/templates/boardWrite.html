@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="/css/boardWrite.css">
+  <title>JS Bin</title>
+</head>
+<body>
+<div id="wrap">
+  <header>
+    <img src="https://i.etsystatic.com/14912200/r/il/7c4834/1295206612/il_570xN.1295206612_nj87.jpg">
+    <h1>css활용강의</h1>
+    <h2>게시판 글쓰기</h2>
+  </header>
+  <form action="/noticeBoard/write" th:object="${postDto}">
+    <div id="content_wrap">
+      <ul class="title_wrap">
+        <li>
+          <div class="board_select">
+          </div>
+        </li>
+        <li>
+          <span class="title">제목</span>
+          <input type="text" onfocus="value=''" th:field="*{title}" placeholder="게시글 제목을 입력하세요" style="width:500px"/>
+        </li>
+        <li>
+          <span class="title">작성자</span>
+          <input type="text" onfocus="value=''" th:field="*{writer}" placeholder="작성자를 입력하세요" style="width:500px"/>
+        </li>
+        <li>
+        </li>
+      </ul>
+      <div class="writeWrap">
+        <textarea class="writeArea" th:field="*{content}"></textarea>
+      </div>
+      <div class="configWrap">
+        <ul>
+          <li class="tag">
+            <span class="title">태그달기</span>
+            <div class="InputArea">
+              <input type="text" id="tagInput" nae="tagInput" onfocus="value=''" value="태그와 태그는 쉼표로 구분하세요">
+            </div>
+          </li>
+          <li>
+            <span class="title">공개설정</span>
+          </li>
+          <li>
+            <span class="title">검색설정</span>
+          </li>
+        </ul>
+      </div>
+      <div class="end">
+        <button type="submit" formmethod="post">저장하기</button>
+        <button type="button" th:onclick="|location.href='@{/noticeBoard}'|">취소하기</button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+<!--Copyright (c) 2022 by songwoo (https://codepen.io/woosong2/pen/bGELEwL)-->

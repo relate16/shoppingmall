@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/noticeBoard.css">
+</head>
+<body>
+  <div id="wrap">
+    <div id="header">
+      <span class="logo"><a href="/home"><h1>홈으로 가기</h1></a></span>
+      <h1>자유게시판</h1>
+      <div class="clear"></div>
+    </div>
+    <div id="content">
+      <table class="bbsList">
+        <thead>
+        <tr>
+          <th>번호</th>
+          <th>title</th>
+          <th>writer</th>
+          <th>date</th>
+          <th>read</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="t_notice">
+          <td class="t_number">
+            </td>
+          <td class="t_subject">
+            <a href="#" title="contents"></a>
+          </td>
+          <td class="t_author"><a href="#" title="name"></a></td>
+          <td class="t_date"></td>
+          <td class="t_read"></td>
+        </tr>
+        <tr th:each="postDto, status: ${page.content}">
+          <td class="t_number" th:text="${status.count}">
+            1234</td>
+          <td class="t_subject">
+            <a th:href="@{|/noticeBoard/read?page=${page.number}&id=${postDto.id}|}" title="contents" th:text="${postDto.title}">pretty girl</a>
+          </td>
+          <td class="t_author"><a th:href="@{|/noticeBoard/search?writer=${postDto.writer}|}" title="name" th:text="${postDto.writer}">hong gil dong</a></td>
+          <td class="t_date" th:text="${#temporals.format(postDto.createdDate,'yyyy-MM-dd HH:mm:ss')}">2017.08.05</td>
+          <td class="t_read"th:text="${postDto.read}">100</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="5"><a href="/noticeBoard/write" class="btnWrite"><span><img class="imageIcon" src="http://www.psdgraphics.com/file/four-leaf-clover.jpg" alt="goodjob"></span>writing</a></td>
+        </tr>
+        </tfoot>
+
+      </table>
+      <div class="pageContainer">
+        <ul class="pageList">
+          <!--페이지번호 미구현. //페이지번호 thymeleaf 제대로 배우면 설정하기.-->
+          <li><a href="#"><</a></li>
+          <li><a href="/noticeBoard?page=0">1</a></li>
+          <li><a href="/noticeBoard?page=1">2</a></li>
+          <li><a href="/noticeBoard?page=2">3</a></li>
+          <li><a href="/noticeBoard?page=3">4</a></li>
+          <li><a href="/noticeBoard?page=4">5</a></li>
+          <li><a href="#">></a></li>
+
+        </ul>
+        <div class="clear"></div>
+      </div>
+      <div class="searchContainer">
+
+        <form action="/noticeBoard/search" method="get" th:object="${postSearchCondition}">
+          <input type="text" id="searchText" th:field="*{title}">
+          <input type="submit" id="searchBtn" value="제목으로 검색하기">
+        </form>
+
+        <form action="/noticeBoard/search" method="get" th:object="${postSearchCondition}">
+          <input type="text" id="searchText1" th:field="*{content}">
+          <input type="submit" id="searchBtn1" value="내용으로 검색하기">
+        </form>
+
+        <form action="/noticeBoard/search" method="get" th:object="${postSearchCondition}">
+          <input type="text" id="searchText3" name="searchText"th:field="*{writer}">
+          <input type="submit" id="searchBtn3" value="작성자로 검색하기">
+        </form>
+      </div>
+      <div id="footer">
+        <span>2015.CSS활용강좌 All rights reserved.</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<!--Copyright (c) 2022 by Erick Lee (https://codepen.io/passionful7/pen/rzjNWd)-->
+
+
+

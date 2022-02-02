@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="product-img">
+        <!--아직 파일업로드 방식을 제대로 배우지 않아, 임시방편으로 이미지파일을 상대경로로 갖다 씀 -->
+            <img th:src="@{|/${itemDto.filePath}|}" height="420" width="327">
+        </div>
+        <div class="product-info">
+            <div class="product-text">
+                <h1 th:text="${itemDto.title}">Cat's Tower</h1>
+                <h2>by studio and friends</h2>
+                <p>Don’t settle for an average cat tree when your cat is anything but average! <br> This super plush cat tower is designed for larger cats making it ideal for big breeds and multi-cat homes. <br> <br> <br>  </p>
+            </div>
+
+            <form th:action="@{/products/detail}" method="post" >
+                <div class="product-price-btn">
+                    <p><span th:text="${itemDto.price}">78</span>$</p>
+                    <input type="hidden" th:value="${itemDto.id}" name="id">
+                    <input type="hidden" th:value="${page}" name="page">
+                    <button type="submit" >ADD CART</button>
+                </div>
+            </form>
+
+            <div class="product-price-btn">
+                <button type="submit" th:onclick="|location.href='@{|/orders/orderBefore?id=${itemDto.id}|}'|">Order</button>
+            </div>
+
+            <div class="product-price-btn">
+                <!--이전 페이지 번호로 가게 구현 -->
+                <button type="button" th:onclick="|location.href='@{|/products?page=${page}|}'|">BACK</button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+<!--Copyright (c) 2021 by Alexandra K (https://codepen.io/ff0004-red/pen/WxJEJZ)-->

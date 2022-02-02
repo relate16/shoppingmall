@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/signUp.css">
+</head>
+<body>
+    <form action="/members/new" method="POST" class="sign-up">
+        <h1 class="sign-up-title">Sign up in seconds</h1>
+        <input type="text" name="username" class="sign-up-input" placeholder="이름" autofocus>
+        <input type="password" name="password" class="sign-up-input" placeholder="비밀번호">
+        <input type="password" name="password_re" class="sign-up-input" placeholder="비밀번호 재입력">
+        <input type="text" name="city" class="sign-up-input" placeholder="도시">
+        <input type="text" name="zipcode" class="sign-up-input" placeholder="우편번호">
+        <input type="submit" value="회원가입" class="sign-up-button">
+    </form>
+    <!--나가는 버튼이 없어서, 임시방편으로 만들어 둠-->
+    <a href="/home" class="sign-up-button">홈으로 가기</a>
+</body>
+</html>
+
+<!--Copyright (c) 2021 by Thibaut (https://codepen.io/Thibaut/pen/jGJAi)-->
