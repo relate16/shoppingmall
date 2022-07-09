@@ -18,17 +18,22 @@
                 <p>Don’t settle for an average cat tree when your cat is anything but average! <br> This super plush cat tower is designed for larger cats making it ideal for big breeds and multi-cat homes. <br> <br> <br>  </p>
             </div>
 
-            <form th:action="@{/products/detail}" method="post" >
+            <form th:action="@{/cart/add}" method="post">
                 <div class="product-price-btn">
                     <p><span th:text="${itemDto.price}">78</span>$</p>
-                    <input type="hidden" th:value="${itemDto.id}" name="id">
+                    <input type="hidden" th:value="${itemDto.itemId}" name="itemId">
+                    <!-- 아래 코드 필요 없는 것 같은데 혹시 몰라서 냅둠-->
                     <input type="hidden" th:value="${page}" name="page">
                     <button type="submit" >ADD CART</button>
                 </div>
             </form>
-
+            <form action="/orders" method="post" id="order">
+                <input type="hidden" th:value="${itemDto.itemId}" name="itemId">
+            </form>
             <div class="product-price-btn">
-                <button type="submit" th:onclick="|location.href='@{|/orders/orderBefore?id=${itemDto.id}|}'|">Order</button>
+                <button type="submit" formmethod="post" form="order">Order</button>
+<!--                <button type="submit" formmethod="get"
+                        th:onclick="|location.href='@{|/orders/orderBefore?id=${itemDto.itemId}|}'|">Order</button>-->
             </div>
 
             <div class="product-price-btn">

@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Cat's Goods u Want: log in</title>
-    <link rel="stylesheet" href="/css/logIn.css">
+    <link rel="stylesheet" href="/css/logIn.css" th:href="@{/css/logIn.css}">
+<style>
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+    .global-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+</style>
 </head>
 <body class="align">
     <div class="grid">
-        <form action="/members/login" method="POST" class="form login">
+        <form action="" th:action th:object="${logInDto}" method="post" class="form login">
 
             <div class="form__field">
                 <label for="login__username"><svg class="icon">
                     <use xlink:href="#icon-user"></use>
                 </svg><span class="hidden">Username</span></label>
                 <input autocomplete="username" id="login__username" type="text"
-                       name="username" class="form__input" placeholder="Username" required>
+                       name="username" th:field="*{username}" class="form__input" th:errorclass="filed-error" placeholder="Username">
+                <div class="field-error" th:errors="*{username}"></div>
             </div>
 
             <div class="form__field">
@@ -22,7 +33,13 @@
                     <use xlink:href="#icon-lock"></use>
                 </svg><span class="hidden">Password</span></label>
                 <input id="login__password" type="password"
-                       name="password" class="form__input" placeholder="Password" required>
+                       name="password" th:field="*{password}" class="form__input" placeholder="Password">
+                <div class="field-error" th:errors="*{password}"></div>
+            </div>
+
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="global-error" th:each="globalError : ${#fields.globalErrors()}" th:text="${globalError}">
+                </p>
             </div>
 
             <div class="form__field">
@@ -35,7 +52,7 @@
             <use xlink:href="#icon-arrow-right"></use>
         </svg></p>
         <!--뒤로가기가 없어서, 임시방편으로 만들어 둠-->
-        <p class="text--center">Wanna go back? <a href="/home">Go back</a> <svg class="icon">
+        <p class="text--center">Wanna go back? <a href="/">Go back</a> <svg class="icon">
             <use xlink:href="#icon-arrow-right"></use>
         </svg></p>
 

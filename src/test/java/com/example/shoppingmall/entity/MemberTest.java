@@ -57,11 +57,11 @@ class MemberTest {
         Item item2 = new Item("itemB", 1000, 10, "hi", "hi");
         em.persist(item);
         OrderItem orderItem2 = OrderItem.createOrderItem(item, 2, 0);
-        Order order = Order.createOrder(member, delivery, orderItem, orderItem2);
+/*        Order order = Order.createOrder(member, delivery, orderItem, orderItem2);
         em.persist(order);
         em.flush();
         em.clear();
-        System.out.println(" =================== ");
+        System.out.println(" =================== ");*/
 
     }
 

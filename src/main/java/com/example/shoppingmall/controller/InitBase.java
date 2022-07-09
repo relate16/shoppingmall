@@ -1,9 +1,9 @@
 package com.example.shoppingmall.controller;
 
 import com.example.shoppingmall.entity.*;
+import com.example.shoppingmall.repository.CartRepository;
 import com.example.shoppingmall.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class InitBase {
     private final InitPostService initPostService;
 
     @PostConstruct
-    public void init() {
+    public void init() throws InterruptedException {
         initService.init();
         initPostService.init();
     }
@@ -31,6 +31,7 @@ public class InitBase {
 
         private final EntityManager em;
         private final MemberService memberService;
+        private final CartRepository cartRepository;
 
         @Transactional
         public void init() {
@@ -39,17 +40,12 @@ public class InitBase {
                 Member member = new Member("member" + i, i, address);
                 em.persist(member);
 
+                Cart cart = Cart.createdCart(member);
+                cartRepository.save(cart);
+
                 Item item = new Item("cat's tower" + i, (i + 1) * 50, (i + 1) * 10,
                         "Cat's Tower v." + i, "img/catTower" + i + ".jpg");
                 em.persist(item);
-
-                //member0에 Order 집합.
-                Member findMember = memberService.findMemberByUsername("member0");
-                OrderItem orderItem = OrderItem.createOrderItem(item, i + 1, 0);
-                Delivery delivery = new Delivery(address);
-                Order order = Order.createOrder(findMember, delivery, orderItem);
-                em.persist(order);
-
             }
         }
     }
@@ -60,11 +56,7 @@ public class InitBase {
     static class InitPostService {
         private final EntityManager em;
 
-
-        //@SnakeyThrows 기능 잘 모름.
-        //게시물 최근 순서 정렬 때문에, 일단 Thread.sleep(100);을 쓰기 위해 사용함.
-        @SneakyThrows
-        public void init() {
+        public void init() throws InterruptedException {
             for (int i = 0; i < 13; i++) {
                 Thread.sleep(100);
                 Post post = new Post("게시글" + i, i + "번째 게시글 내용입니다", "writer" + i + "님", 0);

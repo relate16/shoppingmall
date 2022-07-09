@@ -9,13 +9,13 @@
 </head>
 <body>
     <div class="navi">
-        <a href="/home" id="logo">
+        <a href="/" id="logo">
             <img src="https://i.postimg.cc/C5FbwsQr/logo.png" height="20">
         </a>
         <ul id="menu">
             <li><a href="#">Contact</a></li>
             <li><a href="#">Shop</a></li>
-            <li><a href="#">Cart</a></li>
+            <li><a href="/cart">Cart</a></li>
             <li><a href="#">Login</a></li>
         </ul>
     </div>
@@ -24,7 +24,7 @@
         <h1>Our New Products</h1>
         <div class="product-list">
             <!--페이지에 따라, 나와야 되는 아이템 구현 -->
-            <a th:each="item : ${page.content}" th:href="@{|/products/detail?id=${item.id}&page=${page.number}|}" class="product">
+            <a th:each="item : ${page.content}" th:href="@{|/products/detail?id=${item.itemId}&page=${page.number}|}" class="product">
                 <!--아직 파일업로드 방식을 제대로 배우지 않아, 임시방편으로 이미지파일을 상대경로로 갖다 씀 -->
                 <img th:src="@{${item.filePath}}" width="225">
                 <div th:text="${item.name}" class="product-name">Sunglasses</div>

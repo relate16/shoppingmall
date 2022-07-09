@@ -26,7 +26,9 @@ public class PostQueryRepository {
     }
 
     public Page<PostDto> showPageList(Pageable pageable) {
-        List<PostDto> content = queryFactory.select(new QPostDto(post.id, post.title, post.content, post.writer, post.read, post.createdDate, post.lastModifiedDate))
+        List<PostDto> content = queryFactory
+                .select(new QPostDto(post.id, post.title, post.content, post.writer, post.read,
+                        post.createdDate, post.lastModifiedDate))
                 .from(post)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

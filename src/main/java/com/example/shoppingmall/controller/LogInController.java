@@ -1,38 +1,69 @@
 package com.example.shoppingmall.controller;
 
+import com.example.shoppingmall.constant.SessionConst;
 import com.example.shoppingmall.dto.LogInDto;
-import com.example.shoppingmall.service.LogInService;
+import com.example.shoppingmall.entity.Member;
+import com.example.shoppingmall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LogInController {
-    private final LogInService logInService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/members/login")
     public String logInGet(@ModelAttribute LogInDto logInDto) {
-        return "logIn";
+        return "login/logIn";
     }
 
     @PostMapping("/members/login")
-    public String logInPost(@Valid @ModelAttribute LogInDto logInDto) {
-        //로그인 기능 아직 안배운 상태라서 임시구현.
-        //bindingResult처리 안함 강의 들으면 처리하기
+    public String logInPost(@Validated @ModelAttribute LogInDto logInDto, BindingResult bindingResult,
+                            @RequestParam(defaultValue = "/",required = false) String redirectURL,
+                            HttpServletRequest request) {
 
-        try {
-            logInService.logIn(logInDto);
-            return "redirect:/home";
-        } catch (IllegalStateException e) {
-            //로그 처리 방법 검색해서 채워넣기.
-            System.out.println("e.getMessage() = " + e.getMessage());
-            return "redirect:/members/login";
+        if (bindingResult.hasErrors()) {
+            log.info("error={}", bindingResult);
+            return "login/logIn";
         }
+
+        Optional<Member> findMember = memberRepository.findByUsername(logInDto.getUsername());
+        if (findMember.isEmpty()) {
+            bindingResult.reject("notFoundMember", "defaultMessage");
+            return "login/logIn";
+        }
+
+        Member logInMember = findMember.get();
+        if (logInDto.getPassword() != logInMember.getPassword()) {
+            bindingResult.reject("notFoundMember", "defaultMessage");
+            return "login/logIn";
+        }
+
+        //로그인 성공 이후
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, logInDto);
+
+        return "redirect:" + redirectURL;
     }
 
+    @PostMapping("/members/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
+    }
 }

@@ -41,31 +41,37 @@ public class Order extends BaseTimeEntity {
     }
 
     //생성 메서드
-    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItem) {
+    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
         Order order = new Order();
         //'order.필드명' 처럼 필드값 직접 접근 :
         // 프록시로 조회해해도 order.createOrder(..)처럼 쓸 건 아니기 때문에 필드명으로 직접 접근
         order.member = member;
+
         order.delivery=delivery;
-        for (OrderItem item : orderItem) {
-            order.addOrderItem(item);
+        if (orderItems != null) {
+            for (OrderItem orderItem : orderItems) {
+                order.addOrderItem(orderItem);
+            }
         }
-        order.orderStatus = OrderStatus.결제완료;
+
+        order.orderStatus = OrderStatus.미결제;
         return order;
     }
+
     //비지니스 로직
 
     /**
      * 주문취소
      */
     public void cancel() {
-        if (getOrderStatus() != OrderStatus.결제완료) {
+        if (getOrderStatus() == OrderStatus.미결제 || getOrderStatus() == OrderStatus.결제완료) {
+            for (OrderItem orderItem : orderItems) {
+                orderItem.cancel();
+            }
+            this.orderStatus = OrderStatus.주문취소;
+        } else {
             throw new IllegalStateException("배송이 출발된 이후거나 이미 결제 취소된 상태입니다. 결제를 취소할 수 없습니다.");
         }
-        for (OrderItem orderItem : orderItems) {
-            orderItem.cancel();
-        }
-        this.orderStatus = OrderStatus.주문취소;
     }
 
     /**
@@ -85,11 +91,17 @@ public class Order extends BaseTimeEntity {
      * 배송지 변경
      */
     public void changeDelivery(Delivery delivery) {
-        if (getOrderStatus() != OrderStatus.결제완료) {
+        if (getOrderStatus() == OrderStatus.배송중 || getOrderStatus() == OrderStatus.배송완료) {
             throw new IllegalStateException("배송중이거나 배송완료인 상태입니다. 배송지를 변경할 수 없습니다.");
         }
         this.delivery = delivery;
     }
 
+    /**
+     * 결제 상태 변경
+     */
+    public void changeOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
 }

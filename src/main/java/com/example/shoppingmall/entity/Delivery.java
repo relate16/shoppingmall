@@ -1,6 +1,5 @@
 package com.example.shoppingmall.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +17,10 @@ public class Delivery extends BaseTimeEntity{
     private Address address;
 
     public Delivery(Address address) {
+        this.address = address;
+    }
+
+    public void changeAddress(Address address) {
         this.address = address;
     }
 }

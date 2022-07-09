@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat's Goods u Want</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <h1> Cat's Goods u Want</h1>
+    <div class="nav-container">
+        <ul class="nav">
+            <li class="active">
+                <a href="">
+                    <span class="icon-home"></span>
+                    <span class="text">홈</span>
+                </a>
+            </li>
+            <li>
+                <a href="/cart">
+                    <span class="icon-user"></span>
+                    <span class="text" th:text="|${logInDto.username}님 장바구니|">회원명</span>
+                </a>
+            </li>
+            <li>
+                <a href="/products">
+                    <span class="icon-headphones"></span>
+                    <span class="text">상품들</span>
+                </a>
+            </li>
+            <li>
+                <a href="/noticeBoard">
+                    <span class="icon-picture"></span>
+                    <span class="text">게시판</span>
+                </a>
+            </li>
+            <li>
+                <a href="/orders/showOrders">
+                    <span class="icon-facetime-video"></span><span class="text">주문 조회</span>
+                </a>
+            </li>
+        </ul>
+        <form action="/members/logout" method="post">
+            <div class="form__field">
+                <input type="submit" value="로그아웃">
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/home.js"></script>
+</body>
+</html>
+<!--Copyright (c) 2021 by Sara Soueidan (https://codepen.io/SaraSoueidan/pen/bogtz)-->

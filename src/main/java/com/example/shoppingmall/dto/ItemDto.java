@@ -10,7 +10,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Data
 @NoArgsConstructor
 public class ItemDto {
-    private Long id;
+    private Long itemId;
     @NotEmpty
     private String name;
     @PositiveOrZero
@@ -20,8 +20,8 @@ public class ItemDto {
     private String filePath;
 
     @QueryProjection
-    public ItemDto(Long id, String name, int price, String title, String filePath) {
-        this.id = id;
+    public ItemDto(Long itemId, String name, int price, String title, String filePath) {
+        this.itemId = itemId;
         this.name = name;
         this.price = price;
         this.title = title;

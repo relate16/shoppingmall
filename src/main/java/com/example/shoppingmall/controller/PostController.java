@@ -34,7 +34,7 @@ public class PostController {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 10);
         Page<PostDto> page = postQueryRepository.showPageList(pageRequest);
         model.addAttribute("page", page);
-        return "noticeBoard";
+        return "board/noticeBoard";
     }
 
     @GetMapping("/noticeBoard/search")
@@ -47,12 +47,12 @@ public class PostController {
         // 를 안쓰고 PageRequest.of(pageable.getPageNumber(), 9)를 쓴 후 정렬은 메소드 내에서 직접처리.
         Page<PostDto> page = postQueryRepository.searchPostDtos(postSearchCondition, pageRequest);
         model.addAttribute("page", page);
-        return "noticeBoard";
+        return "board/noticeBoard";
     }
 
     @GetMapping("/noticeBoard/write")
     public String showWriteForm(@ModelAttribute PostDto postDto, Model model) {
-        return "boardWrite";
+        return "board/boardWrite";
     }
 
     @PostMapping("/noticeBoard/write")
@@ -62,10 +62,10 @@ public class PostController {
         return "redirect:/noticeBoard";
     }
 
-    /*클릭시 조회수 증가 Controller 메소드.
+    /**클릭시 조회수 증가 Controller 메소드.
      * 검색한 상태에서 클릭할 때 해당 페이지 유지하기엔 RequestParam으로 넘겨야 될 게 많아 구현 안했고
      * 그나마 편의성을 위해 미검색시, 클릭해도 그 페이지 유지하게 구현해놓음.
-     * */
+     */
     @GetMapping("/noticeBoard/read")
     public String readPost(@RequestParam("id") Long postId, @RequestParam("page") int pageNumber, RedirectAttributes redirectAttributes) {
 

@@ -36,9 +36,11 @@ public class OrderItem extends BaseTimeEntity{
     //생성 메서드
     public static OrderItem createOrderItem(Item item, int quantity, int discount) {
         OrderItem orderItem = new OrderItem();
+
         orderItem.changeItemForCreateMethod(item);
-        orderItem.changeQuantityForCreateMethod(quantity);
         item.subtractQuantity(quantity);
+
+        orderItem.changeQuantityForCreateMethod(quantity);
         orderItem.changeDiscountForCreateMethod(discount);
         orderItem.calculateOrderPrice();
         return orderItem;
@@ -68,7 +70,7 @@ public class OrderItem extends BaseTimeEntity{
 
     //생성 메서드에 쓰이고 있음.
     public int calculateOrderPrice() {
-        this.orderPrice = (int) (item.getPrice() * ((100-getDiscount()) * 0.01));
+        this.orderPrice = (int) (item.getPrice() * ((100 - getDiscount()) * 0.01));
         return orderPrice;
     }
 

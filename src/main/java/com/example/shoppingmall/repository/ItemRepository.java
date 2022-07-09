@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Long>, ItemCustomRepository {
     Optional<Item> findByName(String itemName);
-
 }

@@ -29,13 +29,13 @@
 </head>
 <body>
 <div id="cart" class="row">
-    <div id="back" class="col s6 offset-s3 z-depth-1">
+    <div id="back" class="col s6 offset-s3 z-depth-1" th:each="orderItemDto : ${orderDto.orderItemDtos}">
         <div class="goods left-align">
-            <div id="goods_title" th:text="|주문 제품 : ${orderDto.itemName} x ${orderDto.quantity}개|">제품 이름 x 수량 </div>
-            <div id="goods_price" th:text="|결제 가격 : ${orderDto.orderPrice}$ x ${orderDto.quantity}개 = ${orderDto.totalPrice}$|">제품 가격</div>
+            <div id="goods_title" th:text="|주문 제품 : ${orderItemDto.itemName} x ${orderItemDto.quantity}개|">제품 이름 x 수량 </div>
+            <div id="goods_price" th:text="|결제 가격 : ${orderItemDto.orderPrice}$ x ${orderItemDto.quantity}개 = ${orderItemDto.totalPrice}$|">제품 가격</div>
             <div id="goods_img">
                 <p>이미지 : </p>
-                <img th:src="@{|/${orderDto.imgFilePath}|}" height="150" width="130">
+                <img th:src="@{|/${orderItemDto.filePath}|}" height="150" width="130">
             </div>
         </div>
         <div class="order right-align">
@@ -49,7 +49,7 @@
             <input type="hidden" th:value="${orderDto.orderId}" name="orderId">
         </form>
         <div class="buttons right-align">
-            <button class="waves-effect waves-light btn-small white black-text" onclick="location.href='/home'">홈으로</button>
+            <button class="waves-effect waves-light btn-small white black-text" onclick="location.href='/'">홈으로</button>
             <button class="waves-effect waves-light btn-small white black-text" onclick="location.href='/products'">쇼핑하러 가기</button>
             <button class="waves-effect waves-light btn-small white black-text" type="submit" form="orderCancel" formmethod="post"><i class="material-icons left">close</i>주문 취소</button>
         </div>

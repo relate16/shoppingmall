@@ -12,7 +12,7 @@
 <div class="w768">
     <div class="titleArea hide">
         <span>O R D E R P A G E</span><br/>
-        <a href="/home">홈으로</a>
+        <a href="/">홈으로</a>
     </div>
     <div module="Order_form" unroll="1">
         <!--@css(/css/module/order/form.css)-->
@@ -54,34 +54,34 @@
                         <!--th scope="col" class="mileage">Mileage</th>
                         <th scope="col" class="delivery">Type</th-->
                         <th scope="col" class="charge">배송 상태</th>
-                        <th scope="col" class="total">전체 금액</th>
+                        <th scope="col" class="total">합계 금액</th>
                     </tr>
                     </thead>
-                    <tbody module="Order_normallist">
+                    <tbody module="Order_normallist" th:each="orderItemDto : ${orderDto.orderItemDtos}">
                     <tr>
                         <!--td class="chk {$product_delete_display|display}">{$chk_order_cancel_list}</td-->
                         <td class="thumb"><a href="/product/detail.html{$param}">
-                            <img th:src="@{|/${orderDto.imgFilePath}|}" alt="" height="300" width="200"/></a></td>
+                            <img th:src="@{|/${orderItemDto.filePath}|}" alt="" height="300" width="200"/></a></td>
                         <td class="product">
-                            <a href="/product/detail.html{$param}" th:text="${orderDto.itemName}">{$product_name}</a>
+                            <a href="/product/detail.html{$param}" th:text="${orderItemDto.itemName}">{$product_name}</a>
                             <div class="option {$option_display|display}"></div>
                             <ul class="option" module="Order_optionSet">
-                                    <p th:text="${orderDto.quantity}"></p></li>
+                                    <!--<p th:text="${orderItemDto.quantity}"></p></li>-->
                             </ul>
                             <p class="period {$expiration_date_display|display}"></p>
                         </td>
                         <td class="price">
                             <div class="{$discount}">
-                                <p class="{$product_price_display|display}" th:text="|${orderDto.orderPrice}$|">
+                                <p class="{$product_price_display|display}" th:text="|${orderItemDto.orderPrice}$|">
                                     {$product_price}</p>
                             </div>
                         </td>
-                        <td class="quantity" th:text="|${orderDto.quantity}개|">{$product_quantity_text}</td>
+                        <td class="quantity" th:text="|${orderItemDto.quantity}개|">{$product_quantity_text}</td>
                         <!--td class="mileage">{$product_mileage}</td>
                         <td class="delivery">Basic<div class="{$oversea_able_display|display}">(해외배송가능)</div></td-->
                         <td class="charge" th:text="${orderDto.orderStatus}">배송 상태</td>
                         <td class="total"
-                            th:text="|${orderDto.orderPrice}$ * ${orderDto.quantity}개 = ${orderDto.totalPrice}$|">
+                            th:text="|${orderItemDto.orderPrice}$ * ${orderItemDto.quantity}개 = ${orderItemDto.totalPrice}$|">
                             <div class="{$product_total_price_ref_display|display}">
                                 {$product_total_price}
                             </div>
@@ -93,6 +93,7 @@
                     <tr>
                         <td colspan="9" th:text="|배송지 : ${orderDto.city}|">배송지</td>
                         <td colspan="9" th:text="|주문날짜 : ${#temporals.format(orderDto.orderCreatedDate, 'yyyy-MM-dd HH:mm')}|">주문날짜</td>
+                        <td colspan="9" th:text="|총 금액 : ${orderDto.totalPrice}$|">총금액</td>
                     </tr>
                     </tfoot>
                 </table>
@@ -101,7 +102,7 @@
             <div class="orderListArea {$oversea_display|display}">
                 <div class="title">
                     <h3></h3>
-                    <p class="button"><a href="/home"><img
+                    <p class="button"><a href="/"><img
                             src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_prev.gif" alt="이전페이지"/></a>
                     </p>
                 </div>

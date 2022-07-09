@@ -31,7 +31,7 @@ public class MemberService {
         } catch (EmptyResultException e) {}
     }
 
-    public void equalPassword(SignUpDto signUpDto) {
+    public void notEqualPassword(SignUpDto signUpDto) {
         if (signUpDto.getPassword() != signUpDto.getPassword_re()) {
             throw new IllegalStateException("처음 입력한 비밀번호와 재입력한 비밀번호가 다릅니다.");
         }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/signUp.css">
+    <style>
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+    .global-error {
+    border-color: #dc3545;
+    color: #dc3545;
+    }
+</style>
+</head>
+<body>
+    <form action="/members/new" method="POST" class="sign-up" th:object="${signUpDto}">
+        <h1 class="sign-up-title">Sign up in seconds</h1>
+        <div th:if="${#fields.hasGlobalErrors()}" >
+            <p class="global-error" th:each="globalError : ${#fields.globalErrors()}" th:text="${globalError}"></p>
+        </div>
+        <input type="text" th:field="*{username}" th:errorclass="field-error" name="username" class="sign-up-input" placeholder="이름" autofocus>
+        <div class="field-error" th:errors="*{username}"></div>
+        <input type="password" th:field="*{password}" th:errorclass="field-error" name="password" class="sign-up-input" placeholder="비밀번호">
+        <div class="field-error" th:errors="*{password}"></div>
+        <input type="password" th:field="*{password_re}" th:errorclass="field-error" name="password_re" class="sign-up-input" placeholder="비밀번호 재입력">
+        <div class="field-error" th:errors="*{password_re}"></div>
+        <input type="text" th:field="*{city}" th:errorclass="field-error" name="city" class="sign-up-input" placeholder="도시">
+        <div class="field-error" th:errors="*{city}"></div>
+        <input type="text" th:field="*{zipcode}" th:errorclass="field-error" name="zipcode" class="sign-up-input" placeholder="우편번호">
+        <div class="field-error" th:errors="*{zipcode}"></div>
+        <input type="submit" value="회원가입" class="sign-up-button">
+    </form>
+    <!--나가는 버튼이 없어서, 임시방편으로 만들어 둠-->
+    <a href="/" class="sign-up-button">홈으로 가기</a>
+</body>
+</html>
+
+<!--Copyright (c) 2021 by Thibaut (https://codepen.io/Thibaut/pen/jGJAi)-->
