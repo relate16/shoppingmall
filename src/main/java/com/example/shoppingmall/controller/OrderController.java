@@ -4,6 +4,7 @@ import com.example.shoppingmall.constant.SessionConst;
 import com.example.shoppingmall.dto.LogInDto;
 import com.example.shoppingmall.dto.OrderDto;
 import com.example.shoppingmall.entity.*;
+import com.example.shoppingmall.exception.NotFoundException;
 import com.example.shoppingmall.repository.*;
 import com.example.shoppingmall.service.CartService;
 import com.example.shoppingmall.service.DeliveryService;
@@ -66,7 +67,7 @@ public class OrderController {
         Address address = new Address("고정된 도시", "12345");
 
         Optional<Member> memberOpt = memberRepository.findByUsername(logInDto.getUsername());
-        Member member = memberOpt.orElse(new Member());
+        Member member = memberOpt.orElseThrow(()->new NotFoundException("해당 member를 찾을 수 없습니다."));
 
         Order order = orderService.createOrder(orderItems, address, member);
 
@@ -90,7 +91,7 @@ public class OrderController {
         }
 
         Optional<Member> memberOpt = memberRepository.findByUsername(logInDto.getUsername());
-        Member member = memberOpt.orElse(new Member());
+        Member member = memberOpt.orElseThrow(()->new NotFoundException("해당 member를 찾을 수 없습니다."));
 
         // ↓ order 생성할 때, orderItem 을 필수가 아니게 해서 DB 에서 쓸데없는 행이 추가되지 않도록 했음
         // orderItem 을 필수값으로 설정하면 Order 생성을 위해 orderItem 을 임의로 만들어야 하고
@@ -102,7 +103,7 @@ public class OrderController {
 
             Long itemId = itemIds.get(i);
             Optional<Item> itemOpt = itemRepository.findById(itemId);
-            Item item = itemOpt.orElse(new Item());
+            Item item = itemOpt.orElseThrow(()->new NotFoundException("해당 item을 찾을 수 없습니다."));
 
             //↓오더 화면에 디스카운트 처리 화면이 없어서 0 처리
             OrderItem orderItem = OrderItem.createOrderItem(item, quantities.get(i), 0);

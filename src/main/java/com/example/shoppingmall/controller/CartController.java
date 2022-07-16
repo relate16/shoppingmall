@@ -6,6 +6,7 @@ import com.example.shoppingmall.dto.LogInDto;
 import com.example.shoppingmall.entity.Cart;
 import com.example.shoppingmall.entity.Item;
 import com.example.shoppingmall.entity.Member;
+import com.example.shoppingmall.exception.NotFoundException;
 import com.example.shoppingmall.repository.CartRepository;
 import com.example.shoppingmall.repository.ItemRepository;
 import com.example.shoppingmall.repository.MemberRepository;
@@ -59,7 +60,7 @@ public class CartController {
     public String addProductToCart(@RequestParam Long itemId, @RequestParam int page,
                                    @SessionAttribute(name = SessionConst.LOGIN_MEMBER) LogInDto logInDto) {
         Optional<Member> memberOpt = memberRepository.findByUsername(logInDto.getUsername());
-        Member member = memberOpt.orElse(new Member());
+        Member member = memberOpt.orElseThrow(() -> new NotFoundException("해당 멤버를 찾을 수 없습니다."));
 
         Optional<Cart> findCart = cartRepository.findByMemberId(member.getId());
         cartService.addItemId(findCart, itemId);
@@ -81,12 +82,12 @@ public class CartController {
 
     private Cart findCart(Member member) {
         Optional<Cart> cartOpt = cartRepository.findByMemberId(member.getId());
-        Cart cart = cartOpt.orElse(Cart.createdCart(new Member()));
+        Cart cart = cartOpt.orElseThrow(()->new NotFoundException("해당 cart를 찾을 수 없습니다."));
         return cart;
     }
 
     private Member findMember(LogInDto logInDto) {
         Optional<Member> memberOpt = memberRepository.findByUsername(logInDto.getUsername());
-        return memberOpt.orElse(new Member());
+        return memberOpt.orElseThrow(() -> new NotFoundException("해당 Member를 찾을 수 없습니다."));
     }
 }

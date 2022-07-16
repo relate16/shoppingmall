@@ -17,7 +17,7 @@ public class LogInService {
 
     public Member logIn(LogInDto logInDto) {
         Optional<Member> findMember = memberRepository.findByUsername(logInDto.getUsername());
-        Member member = findMember.orElseGet(Member::new);
+        Member member = findMember.orElseGet(() -> new Member(null, 0));
         //↑ findMember가 Optional.empty일 때 값을 꺼낼 경우
         // 어떻게 처리해야 할 지 잘 몰라, 임기응변으로 필드값 넣지 않은 Member 생성
 

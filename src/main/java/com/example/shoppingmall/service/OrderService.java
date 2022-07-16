@@ -42,9 +42,7 @@ public class OrderService {
     @Transactional
     public void cancel(Long orderId) {
         Optional<Order> orderOpt = orderRepository.findById(orderId);
-        Order order = orderOpt.orElse(
-                Order.createOrder(
-                        new Member(), new Delivery(), null));
+        Order order = orderOpt.orElseThrow(()-> new NotFoundException("해당 order가 없습니다."));
         order.cancel();
     }
 

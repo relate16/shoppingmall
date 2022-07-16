@@ -1,6 +1,7 @@
 package com.example.shoppingmall.entity;
 
 import com.example.shoppingmall.exception.NotEnoughQuantityException;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,7 +13,7 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "name", "price", "quantity", "title", "filePath"})
 public class Item extends BaseEntity {
     @Id

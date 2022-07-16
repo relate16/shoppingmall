@@ -1,5 +1,6 @@
 package com.example.shoppingmall.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "username", "password"}, callSuper = true)
 public class Member extends BaseTimeEntity{
     @Id @GeneratedValue

@@ -1,7 +1,6 @@
 package com.example.shoppingmall.service;
 
 import com.example.shoppingmall.entity.Cart;
-import com.example.shoppingmall.entity.Member;
 import com.example.shoppingmall.exception.NotFoundException;
 import com.example.shoppingmall.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class CartService {
 
     @Transactional
     public void addItemId(Optional<Cart> cartOpt, Long itemId) {
-        Cart cart = cartOpt.orElse(Cart.createdCart(new Member()));
+        Cart cart = cartOpt.orElseThrow(()->new NotFoundException("해당 cart가 없습니다."));
         cart.addItemIdForCreateMethod(itemId);
     }
 
