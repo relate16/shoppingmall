@@ -29,6 +29,7 @@ public class PostController {
 
 
     @GetMapping("/noticeBoard")
+    // @ModelAttribute PostSearchCondition postSearchCondition 는 검색할 때, searchPost 메소드에서 사용됨.
     public String showNoticeBoard(@ModelAttribute PostSearchCondition postSearchCondition,
                                   Pageable pageable, Model model) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 10);
@@ -40,7 +41,6 @@ public class PostController {
     @GetMapping("/noticeBoard/search")
     public String searchPosts(@ModelAttribute PostSearchCondition postSearchCondition, Pageable pageable,
                               Model model) {
-        System.out.println("postSearchCondition = " + postSearchCondition);
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 10);
         //스프링데이터JPA의 pageable이 제공하는 Sort기능으로 querydsl에서 동적조회로 사용하는 게 어려워
         // PageRequest.of(pageable.getPageNumber(), 9, Sort.by(Sort.Direction.DESC, "createdDate")

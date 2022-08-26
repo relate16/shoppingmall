@@ -1,8 +1,10 @@
 package com.example.shoppingmall.service;
 
+import com.example.shoppingmall.dto.LogInDto;
 import com.example.shoppingmall.entity.Member;
 import com.example.shoppingmall.exception.EmptyResultException;
 import com.example.shoppingmall.dto.SignUpDto;
+import com.example.shoppingmall.exception.NotFoundException;
 import com.example.shoppingmall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

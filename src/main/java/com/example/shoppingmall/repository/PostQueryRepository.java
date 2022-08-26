@@ -36,14 +36,12 @@ public class PostQueryRepository {
 
         JPAQuery<Long> countQuery = queryFactory.select(post.count()).from(post);
 
-        System.out.println("count = " + countQuery);
         return PageableExecutionUtils.getPage(content, pageable,countQuery::fetchOne);
 
     }
 
 
     public Page<PostDto> searchPostDtos(PostSearchCondition postSearchCondition, Pageable pageable) {
-
         /*검색시 정확도 순 정렬 방법 찾다 포기.
         case when 기능인 new CaseBuilder orderBy에 어떻게 잘 쓰면 될 것 같은데.. 물어볼 것.*/
         List<PostDto> content = queryFactory.select(

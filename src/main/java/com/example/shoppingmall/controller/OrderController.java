@@ -147,7 +147,7 @@ public class OrderController {
 
         deliveryService.changeDelivery(delivery.getId(),new Address(orderDto.getCity(), orderDto.getZipcode()));
         orderService.changeOrderStatus(order.getId(), OrderStatus.결제완료);
-        cartService.cleanCart(order.getMember().getId());
+        cartService.cleanCart(order.getMember());
 
         redirectAttributes.addAttribute("orderId", orderDto.getOrderId());
         return "redirect:/orders/paymentSuccess?orderId={orderId}";

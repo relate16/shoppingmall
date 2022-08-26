@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseTimeEntity{
     @Id @GeneratedValue
+    @Column(name = "post_id")
     private Long id;
 
     private String title;
