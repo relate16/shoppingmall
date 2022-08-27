@@ -24,10 +24,8 @@ public class MemberService {
     }
 
     public void duplicateMember(String username) {
-        try {
-            findMemberByUsername(username);
+        if (findMemberByUsername(username) != null) {
             throw new IllegalStateException("이미 쓰고 있는 회원 이름입니다.");
-        } catch (Exception e) {
         }
     }
 

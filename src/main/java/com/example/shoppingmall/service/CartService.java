@@ -38,7 +38,6 @@ public class CartService {
 
     public Cart findCartByMember(Member member) {
         Optional<Cart> cartOpt = cartRepository.findByMember(member);
-        Cart cart = cartOpt.orElseThrow(()->new NotFoundException("해당 cart를 찾을 수 없습니다."));
-        return cart;
+        return cartOpt.orElseThrow(() -> new NotFoundException("해당 cart를 찾을 수 없습니다."));
     }
 }

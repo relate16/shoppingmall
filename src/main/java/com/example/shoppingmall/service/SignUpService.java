@@ -27,7 +27,6 @@ public class SignUpService {
 
         Cart cart = Cart.createdCart(member);
         cartRepository.save(cart);
-
         return savedMember.getId();
     }
 }

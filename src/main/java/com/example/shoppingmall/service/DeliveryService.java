@@ -31,8 +31,6 @@ public class DeliveryService {
 
     public Delivery findDeliveryByOrder(Order order) {
         Optional<Delivery> deliveryOpt = deliveryRepository.findById(order.getDelivery().getId());
-        Delivery delivery = deliveryOpt.orElse(new Delivery(new Address("", "")));
-        return delivery;
+        return deliveryOpt.orElse(new Delivery(new Address("", "")));
     }
-
 }

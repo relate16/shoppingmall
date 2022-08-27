@@ -50,9 +50,7 @@ public class OrderService {
             OrderItem orderItem = OrderItem.createOrderItem(item, quantities.get(i), 0);
             order.addOrderItem(orderItem);
         }
-
-        Order saveOrder = orderRepository.save(order);
-        return saveOrder;
+        return orderRepository.save(order);
     }
 
 

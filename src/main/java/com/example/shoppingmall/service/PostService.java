@@ -29,7 +29,6 @@ public class PostService {
 
     public Post findById(Long postId) {
         Optional<Post> findPost = postRepository.findById(postId);
-        Post post = findPost.orElseThrow(() -> new NotFoundException("해당 post가 없습니다."));
-        return post;
+        return findPost.orElseThrow(() -> new NotFoundException("해당 post가 없습니다."));
     }
 }

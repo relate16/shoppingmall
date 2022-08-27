@@ -50,9 +50,8 @@ public class ItemService {
     }
 
     public List<ItemDto> getItemDtos(List<Item> items) {
-        List<ItemDto> itemDtos = items.stream()
+        return items.stream()
                 .map(x -> new ItemDto(x.getId(), x.getName(), x.getPrice(), x.getTitle(), x.getFilePath()))
                 .collect(Collectors.toList());
-        return itemDtos;
     }
 }
