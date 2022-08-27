@@ -1,6 +1,8 @@
 package com.example.shoppingmall.service;
 
+import com.example.shoppingmall.dto.PostDto;
 import com.example.shoppingmall.entity.Post;
+import com.example.shoppingmall.exception.NotFoundException;
 import com.example.shoppingmall.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,14 +16,20 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
 
-    public Post findById(Long postId) {
-        Optional<Post> findPost = postRepository.findById(postId);
-        Post post = findPost.orElseThrow(() -> new IllegalStateException("Post에 찾는 id가 없습니다."));
-        return post;
-    }
-
     @Transactional
     public void addRead(Post post) {
         post.addRead();
+    }
+
+    @Transactional
+    public void createPost(PostDto postDto) {
+        Post post = new Post(postDto.getTitle(), postDto.getContent(), postDto.getWriter(), 0);
+        postRepository.save(post);
+    }
+
+    public Post findById(Long postId) {
+        Optional<Post> findPost = postRepository.findById(postId);
+        Post post = findPost.orElseThrow(() -> new NotFoundException("해당 post가 없습니다."));
+        return post;
     }
 }

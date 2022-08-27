@@ -1,7 +1,9 @@
 package com.example.shoppingmall.service;
 
+import com.example.shoppingmall.dto.ItemDto;
 import com.example.shoppingmall.entity.Cart;
 import com.example.shoppingmall.entity.Item;
+import com.example.shoppingmall.exception.NotFoundException;
 import com.example.shoppingmall.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +21,11 @@ import java.util.Optional;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+
+    public Item findItemById(Long itemId) {
+        Optional<Item> itemOpt = itemRepository.findById(itemId);
+        return itemOpt.orElseThrow(()->new NotFoundException("해당 item이 없습니다."));
+    }
 
     /**
      * 최근에 추가한 item 순서대로 반환
@@ -35,10 +43,16 @@ public class ItemService {
         List<Item> items = new ArrayList<>();
         for (Long itemId : itemIdList) {
             Optional<Item> findItem = itemRepository.findById(itemId);
-            Item item = findItem.orElseThrow(() -> new RuntimeException("해당 Item이 없습니다."));
+            Item item = findItem.orElseThrow(() -> new NotFoundException("해당 Item이 없습니다."));
             items.add(item);
         }
-        System.out.println("items = " + items);
         return items;
+    }
+
+    public List<ItemDto> getItemDtos(List<Item> items) {
+        List<ItemDto> itemDtos = items.stream()
+                .map(x -> new ItemDto(x.getId(), x.getName(), x.getPrice(), x.getTitle(), x.getFilePath()))
+                .collect(Collectors.toList());
+        return itemDtos;
     }
 }

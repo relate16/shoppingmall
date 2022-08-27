@@ -21,7 +21,6 @@ import java.util.Optional;
 public class CartService {
 
     private final CartRepository cartRepository;
-    private final ItemRepository itemRepository;
 
     @Transactional
     public void addItemId(Member member, Long itemId) {

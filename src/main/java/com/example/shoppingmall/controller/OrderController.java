@@ -5,10 +5,10 @@ import com.example.shoppingmall.dto.LogInDto;
 import com.example.shoppingmall.dto.OrderDto;
 import com.example.shoppingmall.entity.*;
 import com.example.shoppingmall.exception.NotFoundException;
-import com.example.shoppingmall.repository.*;
-import com.example.shoppingmall.service.CartService;
-import com.example.shoppingmall.service.DeliveryService;
-import com.example.shoppingmall.service.OrderService;
+import com.example.shoppingmall.repository.MemberRepository;
+import com.example.shoppingmall.repository.OrderQueryRepository;
+import com.example.shoppingmall.repository.OrderRepository;
+import com.example.shoppingmall.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +26,14 @@ import java.util.Optional;
 public class OrderController {
 
     private final MemberRepository memberRepository;
-    private final DeliveryRepository deliveryRepository;
-    private final DeliveryService deliveryService;
     private final OrderRepository orderRepository;
-    private final OrderService orderService;
     private final OrderQueryRepository orderQueryRepository;
-    private final ItemRepository itemRepository;
+
+    private final DeliveryService deliveryService;
+    private final OrderService orderService;
     private final CartService cartService;
+    private final MemberService memberService;
+    private final ItemService itemService;
 
     /**
      * 상세페이지에서 상품 단건 주문시 orderForm
@@ -40,13 +41,11 @@ public class OrderController {
     @GetMapping("/orders")
     public String showOrderForm(@RequestParam String username,
                                 @ModelAttribute OrderDto orderDto, BindingResult bindingResult, Model model) {
-
         OrderDto findOrderDto = orderQueryRepository.findLastOrderDtoByUsername(username);
         findOrderDto.calculateTotalPrice();
         model.addAttribute("orderDto", findOrderDto);
         return "order/orderForm";
     }
-
 
     /**
      * 상품 상세페이지에서 주문
@@ -54,9 +53,7 @@ public class OrderController {
     @PostMapping("/orders")
     public String createOrder(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) LogInDto logInDto,
                               @RequestParam Long itemId, RedirectAttributes redirectAttributes) {
-
-        Optional<Item> itemOpt = itemRepository.findById(itemId);
-        Item item = itemOpt.orElse(new Item("", 0, 0, "", ""));
+        Item item = itemService.findItemById(itemId);
 
         // ↓ 상세페이지에서 주문시, 수량 조절, 할인 조정하는 화면이 없으므로 quantity = 1, discount = 0 처리
         OrderItem orderItem = OrderItem.createOrderItem(item, 1, 0);
@@ -90,27 +87,8 @@ public class OrderController {
             return "redirect:/cart";
         }
 
-        Optional<Member> memberOpt = memberRepository.findByUsername(logInDto.getUsername());
-        Member member = memberOpt.orElseThrow(()->new NotFoundException("해당 member를 찾을 수 없습니다."));
-
-        // ↓ order 생성할 때, orderItem 을 필수가 아니게 해서 DB 에서 쓸데없는 행이 추가되지 않도록 했음
-        // orderItem 을 필수값으로 설정하면 Order 생성을 위해 orderItem 을 임의로 만들어야 하고
-        // orderItem을 임의로 만들면 나중에 임의로 만든 orderItem 을 따로 지우던가 해야 함.
-        Order order = Order.createOrder(member, new Delivery(new Address("","")),
-                null);
-
-        for (int i = 0; i < itemIds.size(); i++) {
-
-            Long itemId = itemIds.get(i);
-            Optional<Item> itemOpt = itemRepository.findById(itemId);
-            Item item = itemOpt.orElseThrow(()->new NotFoundException("해당 item을 찾을 수 없습니다."));
-
-            //↓오더 화면에 디스카운트 처리 화면이 없어서 0 처리
-            OrderItem orderItem = OrderItem.createOrderItem(item, quantities.get(i), 0);
-            order.addOrderItem(orderItem);
-        }
-
-        Order saveOrder = orderRepository.save(order);
+        Member member = memberService.findMemberByUsername(logInDto.getUsername());
+        Order saveOrder = orderService.createOrder(itemIds, quantities, member);
 
         OrderDto orderDto = orderQueryRepository.findOrderDtoByOrderId(saveOrder.getId());
         orderDto.calculateTotalPrice();
@@ -142,10 +120,9 @@ public class OrderController {
 
         //↓ 입력한 배송지 order 의 delivery 에 저장.
         Order order = orderOpt.get();
-        Optional<Delivery> deliveryOpt = deliveryRepository.findById(order.getDelivery().getId());
-        Delivery delivery = deliveryOpt.orElse(new Delivery(new Address("", "")));
-
+        Delivery delivery = deliveryService.findDeliveryByOrder(order);
         deliveryService.changeDelivery(delivery.getId(),new Address(orderDto.getCity(), orderDto.getZipcode()));
+
         orderService.changeOrderStatus(order.getId(), OrderStatus.결제완료);
         cartService.cleanCart(order.getMember());
 
