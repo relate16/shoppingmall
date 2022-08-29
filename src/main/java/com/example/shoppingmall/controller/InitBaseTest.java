@@ -2,6 +2,7 @@ package com.example.shoppingmall.controller;
 
 import com.example.shoppingmall.entity.*;
 import com.example.shoppingmall.repository.CartRepository;
+import com.example.shoppingmall.repository.ItemRepository;
 import com.example.shoppingmall.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,18 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 
-@Profile("local")
+@Profile("test")
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class InitBase {
+public class InitBaseTest {
 
     private final InitService initService;
     private final InitPostService initPostService;
 
     @PostConstruct
     public void init() throws InterruptedException {
-        log.info("initBase가 실행되었습니다.");
+        log.info("initBaseTest가 실행되었습니다.");
         initService.init();
         initPostService.init();
     }

@@ -63,8 +63,7 @@ public class OrderController {
         // ↓ 상세페이지에서 주문시, Delivery 따로 적는 화면이 없으므로 임의로 고정해 등록
         Address address = new Address("고정된 도시", "12345");
 
-        Optional<Member> memberOpt = memberRepository.findByUsername(logInDto.getUsername());
-        Member member = memberOpt.orElseThrow(()->new NotFoundException("해당 member를 찾을 수 없습니다."));
+        Member member = memberService.findMemberByUsername(logInDto.getUsername());
 
         Order order = orderService.createOrder(orderItems, address, member);
 
