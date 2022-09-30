@@ -36,23 +36,6 @@ public class OrderDto {
 
     private List<OrderItemDto> orderItemDtos = new ArrayList<>();
 
-    /* ↓
-    OrderDto(Order order, OrderItem orderItem) {
-        this.orderId = ..
-        this.orderStatus = ..
-        this.username = order.getMember.getUsername();
-        this.address = order.getMember.getAddress();
-        this.itemId = OrderItem.getItem.getId();
-        this.itemName = OrderItem.getItem.getName();
-        this.quantity = ..
-        this.orderPrice = ..
-        this.totalPrice = ..
-    }
-        처럼 Order와 OrderItem 두 개의 매개변수로 처리하려다가
-        fetchJoin 없이 Order, OrderItem 넣을 수도 있을 것 같아 아래처럼 코드 재변경.
-        order.id, .. 필드변수보다 객체로 넣는게
-        나중에 필드를 추가해도, 생성자에서는 매개변수에는 손 안 댈 수 있고, 생성자를 쓰는 곳은 아예 손 안댈 수 있어서 좋은 것 같음.
-    */
     @QueryProjection
     public OrderDto(Order order, Delivery delivery, Member member, List<OrderItemDto> orderItemDtos) {
         this.orderId = order.getId();

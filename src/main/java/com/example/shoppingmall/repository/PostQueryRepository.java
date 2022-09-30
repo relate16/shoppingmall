@@ -42,8 +42,6 @@ public class PostQueryRepository {
 
 
     public Page<PostDto> searchPostDtos(PostSearchCondition postSearchCondition, Pageable pageable) {
-        /*검색시 정확도 순 정렬 방법 찾다 포기.
-        case when 기능인 new CaseBuilder orderBy에 어떻게 잘 쓰면 될 것 같은데.. 물어볼 것.*/
         List<PostDto> content = queryFactory.select(
                         new QPostDto(post.id, post.title, post.content, post.writer, post.read, post.createdDate, post.lastModifiedDate))
                 .from(post)

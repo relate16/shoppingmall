@@ -31,7 +31,7 @@ public class ProductsController {
                              Model model) {
         ItemDto findItemDto = itemQueryRepository.findItemDtoById(itemId);
         model.addAttribute("itemDto", findItemDto);
-        //↓ 이전 페이지로 갈 수 있게 끔 구현하기 위해 pageNumeber 를 파라미터로 받아서 model 로 넘김.
+        /* ↓ 이전 페이지로 갈 수 있게 끔 구현하기 위해 pageNumeber 를 파라미터로 받아서 model 로 넘김. */
         model.addAttribute("page", pageNumber);
         return "item/product";
     }

@@ -26,7 +26,7 @@ public class Post extends BaseTimeEntity{
         this.read = read;
     }
 
-    //비지니스 로직
+    /* 비지니스 로직 */
     public void addRead() {
         this.read += 1;
     }

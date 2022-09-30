@@ -26,7 +26,9 @@ public class PostController {
     private final PostQueryRepository postQueryRepository;
 
 
-    // @ModelAttribute PostSearchCondition postSearchCondition 는 검색할 때, searchPost 메소드에서 사용됨.
+    /**
+     * @param postSearchCondition 는 검색할 때, searchPost 메소드에서 사용됨.
+     */
     @GetMapping("/noticeBoard")
     public String showNoticeBoard(@ModelAttribute PostSearchCondition postSearchCondition,
                                   Pageable pageable, Model model) {
@@ -40,9 +42,9 @@ public class PostController {
     public String searchPosts(@ModelAttribute PostSearchCondition postSearchCondition,
                               Pageable pageable, Model model) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 10);
-        //스프링데이터JPA의 pageable이 제공하는 Sort기능으로 querydsl에서 동적조회로 사용하는 게 어려워
-        // PageRequest.of(pageable.getPageNumber(), 9, Sort.by(Sort.Direction.DESC, "createdDate")
-        // 를 안쓰고 PageRequest.of(pageable.getPageNumber(), 9)를 쓴 후 정렬은 메소드 내에서 직접처리.
+        /* 스프링데이터JPA의 pageable이 제공하는 Sort기능으로 querydsl에서 동적조회로 사용하는 게 어려워
+        PageRequest.of(pageable.getPageNumber(), 9, Sort.by(Sort.Direction.DESC, "createdDate")
+        를 안쓰고 PageRequest.of(pageable.getPageNumber(), 9)를 쓴 후 정렬은 메소드 내에서 직접처리. */
         Page<PostDto> page = postQueryRepository.searchPostDtos(postSearchCondition, pageRequest);
         model.addAttribute("page", page);
         return "board/noticeBoard";

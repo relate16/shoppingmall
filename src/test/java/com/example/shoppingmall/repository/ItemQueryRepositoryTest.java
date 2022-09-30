@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
@@ -28,4 +29,5 @@ public class ItemQueryRepositoryTest {
         Assertions.assertThat(itemDtos.getContent().get(1).getPrice()).isEqualTo(100);
         Assertions.assertThat(itemDtos.getContent().get(2).getPrice()).isEqualTo(150);
     }
+
 }

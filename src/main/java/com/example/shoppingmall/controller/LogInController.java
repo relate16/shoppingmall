@@ -51,7 +51,7 @@ public class LogInController {
             return "login/logIn";
         }
 
-        //로그인 성공 이후
+        /* 로그인 성공 이후 */
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, logInDto);
 

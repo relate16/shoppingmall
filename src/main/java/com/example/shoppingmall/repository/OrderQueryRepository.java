@@ -66,10 +66,8 @@ public class OrderQueryRepository {
 
             return orderDto;
         } catch (NullPointerException e) {
-            //로그 출력 검색해서 수정하기.
             log.info("log info = {}", e);
-            // Null일 경우 return 임시로 처리.
-            return new OrderDto();
+            return new OrderDto(); // Null일 경우 return 임시로 처리.
         }
     }
 
@@ -126,7 +124,7 @@ public class OrderQueryRepository {
             orderDtos.add(orderDto);
         }
 
-        //최근 주문 순 정렬
+        /* 최근 주문 순 정렬 */
         List<OrderDto> sorted = orderDtos.stream()
                 .sorted((a, b) -> (int) ChronoUnit.MILLIS.between(a.getOrderCreatedDate(),b.getOrderCreatedDate()))
                 .collect(Collectors.toList());
@@ -169,7 +167,7 @@ public class OrderQueryRepository {
             orderDtos.add(orderDto);
         }
 
-        //최근 주문 순 정렬
+        /* 최근 주문 순 정렬 */
         List<OrderDto> sorted = orderDtos.stream()
                 .sorted((a, b) -> (int) ChronoUnit.MILLIS.between(a.getOrderCreatedDate(),b.getOrderCreatedDate()))
                 .collect(Collectors.toList());

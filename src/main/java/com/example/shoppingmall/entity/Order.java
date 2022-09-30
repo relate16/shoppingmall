@@ -34,17 +34,17 @@ public class Order extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    //연관관계 편의 메서드
+    /* 연관관계 편의 메서드 */
     public void addOrderItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         orderItem.changeOrder(this);
     }
 
-    //생성 메서드
+    /* 생성 메서드 */
     public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
         Order order = new Order();
-        //'order.필드명' 처럼 필드값 직접 접근 :
-        // 프록시로 조회해해도 order.createOrder(..)처럼 쓸 건 아니기 때문에 필드명으로 직접 접근
+        /* 'order.필드명' 처럼 필드값 직접 접근 :
+        프록시로 조회해해도 order.createOrder(..)처럼 쓸 건 아니기 때문에 필드명으로 직접 접근 */
         order.member = member;
 
         order.delivery=delivery;
@@ -58,7 +58,7 @@ public class Order extends BaseTimeEntity {
         return order;
     }
 
-    //비지니스 로직
+    /* 비지니스 로직 */
 
     /**
      * 주문취소

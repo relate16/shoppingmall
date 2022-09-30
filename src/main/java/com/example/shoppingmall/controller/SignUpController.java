@@ -30,7 +30,7 @@ public class SignUpController {
             return "signup/signUp";
         }
 
-        // ↓ 이미 존재하는 회원이거나 비밀번호 최초 입력 != 비밀번호 재입력 일 경우 globalError
+        /* ↓ 이미 존재하는 회원이거나 비밀번호 최초 입력 != 비밀번호 재입력 일 경우 globalError */
         try {
             signUpService.signUp(signUpDto);
         } catch (IllegalStateException e) {

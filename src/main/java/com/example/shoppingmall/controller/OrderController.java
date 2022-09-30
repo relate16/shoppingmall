@@ -55,12 +55,12 @@ public class OrderController {
                               @RequestParam Long itemId, RedirectAttributes redirectAttributes) {
         Item item = itemService.findItemById(itemId);
 
-        // ↓ 상세페이지에서 주문시, 수량 조절, 할인 조정하는 화면이 없으므로 quantity = 1, discount = 0 처리
+        /* ↓ 상세페이지에서 주문시, 수량 조절, 할인 조정하는 화면이 없으므로 quantity = 1, discount = 0 처리 */
         OrderItem orderItem = OrderItem.createOrderItem(item, 1, 0);
         List<OrderItem> orderItems = new ArrayList<>();
         orderItems.add(orderItem);
 
-        // ↓ 상세페이지에서 주문시, Delivery 따로 적는 화면이 없으므로 임의로 고정해 등록
+        /* ↓ 상세페이지에서 주문시, Delivery 따로 적는 화면이 없으므로 임의로 고정해 등록 */
         Address address = new Address("고정된 도시", "12345");
 
         Member member = memberService.findMemberByUsername(logInDto.getUsername());
@@ -81,7 +81,7 @@ public class OrderController {
                                       @RequestParam(name = "id",required = false) ArrayList<Long> itemIds,
                                       @RequestParam(name = "quantity", required = false) ArrayList<Integer> quantities,
                                       Model model) {
-        // ↓ 카트에 담긴 게 없을 때 주문하기 누를 경우 카트 페이지 그대로 유지.
+        /* ↓ 카트에 담긴 게 없을 때 주문하기 누를 경우 카트 페이지 그대로 유지. */
         if (itemIds == null) {
             return "redirect:/cart";
         }
@@ -111,13 +111,13 @@ public class OrderController {
                                      RedirectAttributes redirectAttributes) {
         Optional<Order> orderOpt = orderRepository.findById(orderDto.getOrderId());
 
-        //↓ orderId에 해당하는 Order 가 없을 시, 주문 페이지로 다시 이동.
+        /* ↓ orderId에 해당하는 Order 가 없을 시, 주문 페이지로 다시 이동. */
         if (orderOpt.isEmpty()) {
             bindingResult.reject("notFoundOrder", "잘못된 주문Id");
             return "order/orderForm";
         }
 
-        //↓ 입력한 배송지 order 의 delivery 에 저장.
+        /* ↓ 입력한 배송지 order 의 delivery 에 저장. */
         Order order = orderOpt.get();
         Delivery delivery = deliveryService.findDeliveryByOrder(order);
         deliveryService.changeDelivery(delivery.getId(),new Address(orderDto.getCity(), orderDto.getZipcode()));

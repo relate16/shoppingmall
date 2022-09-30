@@ -29,11 +29,10 @@ public class OrderItem extends BaseTimeEntity{
     private int orderPrice;
     private int quantity;
 
-    //discount 단위 %, 10% 할인이면 10 입력.
+    /* discount 단위 %, 10% 할인이면 10 입력. */
     private int discount;
 
-
-    //생성 메서드
+    /* 생성 메서드 */
     public static OrderItem createOrderItem(Item item, int quantity, int discount) {
         OrderItem orderItem = new OrderItem();
 
@@ -46,7 +45,8 @@ public class OrderItem extends BaseTimeEntity{
         return orderItem;
     }
 
-    //필드값 접근 메서드
+    /*필드 값 접근 메서드*/
+
     public void changeOrder(Order order) {
         this.order = order;
     }
@@ -63,12 +63,19 @@ public class OrderItem extends BaseTimeEntity{
         this.discount = discount;
     }
 
-    //비지니스 로직
+    /* 비지니스 로직 */
+
+    /**
+     * 취소
+     */
     public void cancel() {
         getItem().addQuantity(getQuantity());
     }
 
-    //생성 메서드에 쓰이고 있음.
+    /**
+     * 주문 가격 계산
+     * 생성 메서드에 쓰이고 있음.
+     */
     public int calculateOrderPrice() {
         this.orderPrice = (int) (item.getPrice() * ((100 - getDiscount()) * 0.01));
         return orderPrice;

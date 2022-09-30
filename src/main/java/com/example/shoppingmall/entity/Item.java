@@ -37,14 +37,18 @@ public class Item extends BaseEntity {
         this.filePath = filePath;
     }
 
-    //필드 접근
+    /* 비지니스 로직 */
 
-
-    //비지니스 로직.
+    /**
+     * 수량 추가
+     */
     public void addQuantity(int quantity) {
         this.quantity += quantity;
     }
 
+    /**
+     * 수량 제거
+     */
     public void subtractQuantity(int quantity) {
         int subtractedQuantity = this.quantity - quantity;
         if (subtractedQuantity < 0) {
