@@ -38,8 +38,8 @@ public class ItemService {
         Collections.reverse(itemIdList);
 
         /* JPA에서 id 중복으로 조회할 경우 db를 한 개만 가져와서 장바구니에 중복된 상품을 넣을 경우 하나 상품만 보여져서
-        iter문으로 따로 처리
-        예) select i from item i where i.id in 1, 1, 1 -> 1개 데이터만 들고옴 */
+        * iter문으로 따로 처리
+        * 예) select i from item i where i.id in 1, 1, 1 -> 1개 데이터만 들고옴 */
         List<Item> items = new ArrayList<>();
         for (Long itemId : itemIdList) {
             Optional<Item> findItem = itemRepository.findById(itemId);

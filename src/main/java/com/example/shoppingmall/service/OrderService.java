@@ -33,8 +33,8 @@ public class OrderService {
     @Transactional
     public Order createOrder(ArrayList<Long> itemIds, ArrayList<Integer> quantities, Member member) {
         /* ↓ order 생성할 때, orderItem 을 필수가 아니게 해서 DB 에서 쓸데없는 행이 추가되지 않도록 했음
-        orderItem 을 필수값으로 설정하면 Order 생성을 위해 orderItem 을 임의로 만들어야 하고
-        orderItem을 임의로 만들면 나중에 임의로 만든 orderItem 을 따로 지우던가 해야 함. */
+        * orderItem 을 필수값으로 설정하면 Order 생성을 위해 orderItem 을 임의로 만들어야 하고
+        * orderItem을 임의로 만들면 나중에 임의로 만든 orderItem 을 따로 지우던가 해야 함. */
         Order order = Order.createOrder(member, new Delivery(new Address("","")),
                 null);
 

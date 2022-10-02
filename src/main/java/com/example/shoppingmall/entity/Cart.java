@@ -44,7 +44,7 @@ public class Cart {
     }
     public void addItemIdForCreateMethod(Long itemId) {
         /* DB에 itemIds가 ",9,3" 처럼 되는 걸 방지하기 위해 if문 추가.
-        if문 추가 전 코드 : this.itemIds += "," + itemId */
+        * if문 추가 전 코드 : this.itemIds += "," + itemId */
         if (this.itemIds == "") {
             this.itemIds += itemId;
         } else {
