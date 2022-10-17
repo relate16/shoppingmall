@@ -1,18 +1,13 @@
 package com.example.shoppingmall.service;
 
 import com.example.shoppingmall.entity.Cart;
-import com.example.shoppingmall.entity.Item;
 import com.example.shoppingmall.entity.Member;
 import com.example.shoppingmall.exception.NotFoundException;
 import com.example.shoppingmall.repository.CartRepository;
-import com.example.shoppingmall.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @Service
